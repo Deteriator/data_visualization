@@ -1,0 +1,56 @@
+body{
+	margin:0;
+	padding:0;
+	font-family:"arial",heletica,sans-serif;
+	font-size:12px;
+ 	background: linear-gradient(352deg, #00b587, #0020a1);
+	background-size: 400% 400%;
+    -webkit-animation: AnimationName 30s ease infinite;
+    -moz-animation: AnimationName 30s ease infinite;
+	animation: AnimationName 30s ease infinite;
+}
+@-webkit-keyframes AnimationName {
+    0%{background-position:55% 0%}
+    50%{background-position:46% 100%}
+    100%{background-position:55% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:55% 0%}
+    50%{background-position:46% 100%}
+    100%{background-position:55% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:55% 0%}
+    50%{background-position:46% 100%}
+    100%{background-position:55% 0%}
+}
+canvas {
+ width: 100%; height: 100%
+ }
+ #info {
+	position: absolute;
+	top: 10px;
+	width: 100%;
+	text-align: center;
+	z-index: 100;
+	display:block;
+}
+footer {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: white;
+  font: 10pt monospace;
+  text-align: right;
+  padding: 10pt;
+  margin: 5pt;
+  border: 1px solid white;
+  cursor: default;
+  z-index: 999;
+  background: rgba(0,0,0,0.75);
+}
+p span {
+  color: #FF0;
+  font-weight: bold;
+  text-decoration: underline;
+}

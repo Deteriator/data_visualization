@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>My first three.js app</title>
+		<style>
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+
+		<script>
+
+		var scene = new THREE.Scene();
+			var aspectRatio = window.innerWidth / window.innerHeight;
+			var loader = new THREE.TextureLoader();
+			var camera = new THREE.PerspectiveCamera(75, aspectRatio, 1, 10000);
+			camera.position.z = 450;
+			scene.add(camera);
+			var light = new THREE.DirectionalLight( 0x737373 );
+			light.position.set( 7, 7, 0 ).normalize();
+			var light2 = new THREE.AmbientLight( 0x5a5a5a ); // soft white light
+			scene.add(light);
+			scene.add(light2);
+			// Nucleus
+			//                                      radius
+			//                                        | width segments
+			//                                        |    | height segments
+			//                                        |    |   |
+			//                                        v    v   v
+			var bigSphere = new THREE.SphereGeometry(100, 20, 20);
+			var cover = new  THREE.MeshPhongMaterial();
+			var nucleus = new THREE.Mesh(bigSphere, cover);
+			cover.map    = THREE.ImageUtils.loadTexture('image/Cjnkbcv.jpg')
+			cover.bumpMap    = THREE.ImageUtils.loadTexture('image/earthbump1k.jpg')
+			cover.bumpScale = 0.005
+			cover.specularMap    = THREE.ImageUtils.loadTexture('image/earthspec1k.jpg')
+			cover.specular  = new THREE.Color('grey')
+			scene.add(nucleus);
+			// Electron 1
+			var geometry = new THREE.BoxGeometry( 35, 2, 35);
+			var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('image/etsy.png') } );
+			var electron1 = new THREE.Mesh(geometry, material);
+			nucleus.add(electron1);
+			//                        x,y,z
+			electron1.position.set(-150,150,0);
+			// Electron 2
+			var electron2 = new THREE.Mesh(geometry, material);
+			nucleus.add(electron2);
+			electron2.position.set(150,150,0);
+
+			// Electron 3
+			var electron3 = new THREE.Mesh(geometry, material);
+			nucleus.add(electron3);
+			electron3.position.set(0,0,150);
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			var clock = new THREE.Clock();
+
+			function animate() {
+			  requestAnimationFrame(animate);
+
+			  var t = clock.getElapsedTime();
+			   // orbit from bottom right to top left
+			  //
+			  //                            movement speed
+			  //                               |
+			  //                               |  orbit distance
+			  //                               |      |
+			  //                               v      v
+			  electron1.position.x = Math.sin(0.5*t) * -150;
+			  electron1.position.y = Math.sin(0.5*t) * 150;
+			  electron1.position.z = Math.cos(0.5*t) * 150;
+			  // orbit from top right to bottom left
+				electron2.position.x = Math.cos(5*t) * 150;
+				electron2.position.y = Math.cos(5*t) * 150;
+				electron2.position.z = Math.sin(5*t) * 150;
+
+				var tOffset = 1.5 + clock.getElapsedTime();
+
+				// orbit from the bottom to the top
+				electron3.position.x = Math.sin(5*tOffset) * 0;
+				electron3.position.y = Math.sin(5*tOffset) * 150;
+				electron3.position.z = Math.cos(5*tOffset) * 150;
+				//main globe animations
+				nucleus.rotation.y += 0.001;
+			  //Set Renderer always at bottom of function
+			  renderer.render(scene, camera);
+			}
+			//Always have at bottom of file
+			animate();
+
+		</script>
+	</body>
+</html>
